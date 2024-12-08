@@ -10,7 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <div>
-        <main>
+        <main className="relative flex bg-black-3">
             <LeftSideBar />
             {children}
             <p className="text-white-1">RIGHT SIDEBAR</p>

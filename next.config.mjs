@@ -7,6 +7,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'tenzing.pe'
+      },
+      {
+        protocol: 'https',
         hostname: 'lovely-flamingo-139.convex.cloud'
       },
       {

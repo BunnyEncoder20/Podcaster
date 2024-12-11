@@ -1,6 +1,12 @@
 import React from 'react'
 
-const GeneratePodcast = () => {
+const GeneratePodcast = ({setAudioStorageId
+  setAudio
+  voiceType
+  audio
+  voicePrompt
+  setVoicePrompt
+  setAudioDuration}) => {
   return (
     <div>GeneratePodcast</div>
   )

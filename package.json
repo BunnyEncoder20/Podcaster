@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.5",
-    "@hookform/resolvers": "^3.4.2",
+    "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.1.0",
@@ -29,12 +29,12 @@
     "openai": "^4.47.2",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.51.5",
+    "react-hook-form": "^7.54.0",
     "svix": "^1.43.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.1",
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/node": "^20",

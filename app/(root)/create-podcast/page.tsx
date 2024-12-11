@@ -8,13 +8,18 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
 // Shadcn imports 
-import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Label } from "@radix-ui/react-label"
+import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { cn } from "@/lib/utils"
 
+// utils imports 
+import { cn } from "@/lib/utils"
+import { Label } from "@radix-ui/react-label"
+
+// components imports
+import GeneratePodcast from "@/components/GeneratePodcast"
+import GenerateThumbnail from "@/components/GenerateThumbnail"
 
 // form schema
 const formSchema = z.object({
@@ -22,7 +27,6 @@ const formSchema = z.object({
     message: "Username must be at least 2 characters.",
   }),
 })
-
 
 // voices from OpenAI
 const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx'];
@@ -69,10 +73,10 @@ const CreatePodcastPage = () => {
               render={({ field }) => (
                 <FormItem>
 
-                  <FormLabel className="text-16 font-bold text-white-1">Username</FormLabel>
+                  <FormLabel className="text-16 font-bold text-white-1">Podcast Title</FormLabel>
 
                   <FormControl>
-                    <Input placeholder="My Podcast" {...field} className="input-case focus-visible:ring-orange-1"/>
+                    <Input placeholder="My Podcast" {...field} className="input-class focus-visible:ring-orange-1"/>
                   </FormControl>
 
                   <FormMessage className="text-white-1"/>
@@ -111,10 +115,38 @@ const CreatePodcastPage = () => {
               </Select>
             </div>
 
+            {/* Podcast Content Field */}
+            <FormField
+              control={form.control}
+              name="podcastDescription"
+              render={({ field }) => (
+                <FormItem>
 
+                  <FormLabel className="text-16 font-bold text-white-1">Podcast Description</FormLabel>
+
+                  <FormControl>
+                    <Textarea placeholder="Write a short Podcast description" {...field} className="input-class focus-visible:ring-orange-1"/>
+                  </FormControl>
+
+                  <FormMessage className="text-white-1"/>
+
+                </FormItem>
+              )}
+            />
           </div>
 
-          <Button type="submit">Submit</Button>
+          {/* AI components */}
+          <div className="flex flex-col pt-10">
+
+            {/* Generate Podcast audio */}
+            <GeneratePodcast />
+
+            {/* Generate Thumbnail image */}
+            <GenerateThumbnail />
+          </div>
+
+
+          
 
         </form>
       </Form>

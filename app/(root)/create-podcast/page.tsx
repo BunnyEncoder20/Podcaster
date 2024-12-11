@@ -42,7 +42,7 @@ const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx'];
 const CreatePodcastPage = () => {
 
   // use states 
-  const [isSubmitting, setIsSubmitting] = useState(true)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   
   const [imagePrompt, setImagePrompt] = useState('')
   const [imageStorageId, setImageStorageId] = useState<Id<"_storage"> | null>(null)
@@ -93,7 +93,7 @@ const CreatePodcastPage = () => {
                   <FormLabel className="text-16 font-bold text-white-1">Podcast Title</FormLabel>
 
                   <FormControl>
-                    <Input placeholder="My Podcast" {...field} className="input-class focus-visible:ring-orange-1"/>
+                    <Input placeholder="My Podcast" {...field} className="input-class focus-visible:ring-offset-orange-1"/>
                   </FormControl>
 
                   <FormMessage className="text-white-1"/>
@@ -108,10 +108,10 @@ const CreatePodcastPage = () => {
                 Select AI Voice
               </Label>
               <Select onValueChange={(value) => setVoiceType(value)}>
-                <SelectTrigger className={cn("text-16 w-full border-none bg-black-1 text-gray-1")}>
+                <SelectTrigger className={cn("text-16 w-full border-none bg-black-1 text-gray-1 focus:ring-offset-orange-1")}>
                   <SelectValue placeholder="AI Voices" className="placeholder:text-gray-1"/>
                 </SelectTrigger>
-                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
+                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus-visible:ring-offset-orange-1">
                   {
                     voiceCategories.map((category) => (
                       <SelectItem key={category} value={category} className="capitalize focus:bg-orange-1">
@@ -132,7 +132,7 @@ const CreatePodcastPage = () => {
               </Select>
             </div>
 
-            {/* Podcast Content Field */}
+            {/* Podcast Description Field */}
             <FormField
               control={form.control}
               name="podcastDescription"
@@ -142,7 +142,7 @@ const CreatePodcastPage = () => {
                   <FormLabel className="text-16 font-bold text-white-1">Podcast Description</FormLabel>
 
                   <FormControl>
-                    <Textarea placeholder="Write a short Podcast description" {...field} className="input-class focus-visible:ring-orange-1"/>
+                    <Textarea placeholder="Write a short Podcast description" {...field} className="input-class focus-visible:ring-offset-orange-1"/>
                   </FormControl>
 
                   <FormMessage className="text-white-1"/>

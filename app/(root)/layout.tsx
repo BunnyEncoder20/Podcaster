@@ -6,6 +6,9 @@ import LeftSideBar from "@/components/LeftSideBar";
 import RightSideBar from "@/components/RightSideBar";
 import MobileNav from "@/components/MobileNav";
 
+// shadcn imports 
+import { Toaster } from "@/components/ui/toaster";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +28,7 @@ export default function RootLayout({
                 </div>
 
                 <div className="flex flex-col md:pb-14">
-                  {/* TODO: Shadcn Toaster */}
+                  <Toaster />
                   {children}
                 </div>
 

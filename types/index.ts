@@ -127,3 +127,13 @@ export type UseDotButtonType = {
   scrollSnaps: number[];
   onDotButtonClick: (index: number) => void;
 };
+
+// playht
+// Define the valid voiceEngine options as a union type
+export type VoiceEngineType =
+  | "PlayDialog"
+  | "Play3.0-mini"
+  | "PlayHT2.0-turbo"
+  | "PlayHT2.0"
+  | "PlayHT1.0"
+  | "Standard";

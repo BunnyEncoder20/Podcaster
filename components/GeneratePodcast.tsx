@@ -109,75 +109,72 @@ import { useUploadFiles } from '@xixixao/uploadstuff/react'
 //   }
 // }
 
+
 const useGeneratePodcast = ({
   setAudio,
   voiceType,
   voicePrompt,
   setAudioStorageId,
 }: GeneratePodcastProps) => {
-  const [isGenerating, setIsGenerating] = useState(false);
-  const { toast } = useToast();
 
-  // Use PlayHT action to generate the audio file
-  const streamAudio = useAction(api.playht.streamAudioAction);
+  // for toast notifications
+  const { toast } = useToast()
+
+  // State to track the generation process
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // Fetch Convex action for PlayHT
+  const getAudioUrl = useAction(api.playht.generateAudioAction);
+
+  // Upload URL generation logic
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const { startUpload } = useUploadFiles(generateUploadUrl);
-  const getAudioURL = useMutation(api.podcasts.getURL);
 
   const generatePodcast = async () => {
     setIsGenerating(true);
-    setAudio("");
-
-    if (!voiceType) {
-      toast({
-        title: "Voice missing!",
-        description: "Please provide an AI voice to generate the podcast.",
-      });
-      setIsGenerating(false);
-      return;
-    }
-
-    if (!voicePrompt) {
-      toast({
-        title: "Voice prompt missing!",
-        description: "Please provide a prompt to generate the podcast.",
-      });
-      setIsGenerating(false);
-      return;
-    }
+    setAudio('');
 
     try {
-      const response = await streamAudio({
-        text: voicePrompt,
-        voiceEngine: "PlayDialog",
+      // Validate inputs
+      if (!voicePrompt) throw new Error('Prompt is required');
+      if (!voiceType) throw new Error('Voice type is required');
+
+      // Get the audio URL
+      const audioUrl = await getAudioUrl({ text: voicePrompt, voice: voiceType });
+
+      // Download the audio file
+      const response = await fetch(audioUrl);
+      const blob = await response.blob();
+      const file = new File([blob], `podcast-${uuidv4()}.mp3`, {
+        type: 'audio/mpeg',
       });
 
-      const blob = new Blob([response], { type: "audio/mpeg" });
-      const filename = `podcast-${uuidv4()}.mp3`;
-      const file = new File([blob], filename, { type: "audio/mpeg" });
-
+      // Upload the file
       const uploaded = await startUpload([file]);
       const storageId = (uploaded[0].response as any).storageId;
-      const audioURL = await getAudioURL({ storageId });
 
+      // Set states
       setAudioStorageId(storageId);
-      setAudio(audioURL!);
+      setAudio(audioUrl);
       toast({
-        title: "Podcast Generated Successfully!",
+        title: 'Podcast Generated Successfully!',
       });
     } catch (error) {
-      console.error("Error generating podcast:", error);
+      console.error('Error generating podcast:', error);
       toast({
-        title: "Error Creating Podcast!",
-        description: "There was an error creating your podcast. Please try again later.",
-        variant: "destructive",
+        title: 'Error Creating Podcast!',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
       });
     } finally {
       setIsGenerating(false);
     }
   };
 
-  return { isGenerating, generatePodcast };
+  return {
+    isGenerating,
+    generatePodcast,
+  };
 };
 
 

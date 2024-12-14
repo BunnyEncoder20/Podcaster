@@ -5,6 +5,7 @@ import { action } from "./_generated/server";
 import { v } from "convex/values";
 import { VoiceEngineType } from "@/types";
 
+// Initialize PlayHT client
 PlayHT.init({
   userId: process.env.PLAYHT_USER_ID!,
   apiKey: process.env.PLAYHT_API_KEY!,
@@ -12,26 +13,32 @@ PlayHT.init({
   defaultVoiceEngine: 'PlayDialog',
 });
 
-export const streamAudioAction = action({
-  args: { text: v.string(), voiceEngine: v.string() },
-  handler: async (_, { text, voiceEngine }: { text: string; voiceEngine: VoiceEngineType }) => {
+
+export const generateAudioAction = action({
+  args: { 
+    text: v.string(), 
+    voice: v.optional(v.string()) 
+  },
+  handler: async (_, { text, voice }) => {
     try {
-      const stream = await PlayHT.stream(text, { voiceEngine });
-
-      // Accumulate audio chunks from the stream
-      const chunks: Buffer[] = [];
-      stream.on('data', (chunk) => {
-        chunks.push(chunk);
+      // Use PlayHT's generate method
+      const generated = await PlayHT.generate(text,{
+        voiceEngine: 'PlayHT2.0',
+        voiceId: 's3://peregrine-voices/oliver_narrative2_parrot_saad/manifest.json',
+        // outputFormat: 'mp3',
+        // temperature: 1.5,
+        // quality: 'high',
+        // speed: 0.8,
       });
 
-      // Wait for the stream to end and return the combined audio buffer
-      return new Promise<Buffer>((resolve, reject) => {
-        stream.on('end', () => resolve(Buffer.concat(chunks)));
-        stream.on('error', (err) => reject(err));
-      });
+      // Extract and return the audio URL
+      const { audioUrl } = generated;
+      if (!audioUrl) throw new Error('❌ [ERROR] no audio URL in response');
+
+      return audioUrl;
     } catch (error) {
-      console.error("Error streaming audio from PlayHT:", error);
-      throw new Error("Failed to generate audio.");
+      console.error('❌ [ERROR] Error generating audio:', error);
+      throw new Error('❌ [ERROR] Failed to generate audio');
     }
   },
 });

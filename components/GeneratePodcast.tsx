@@ -118,17 +118,16 @@ const useGeneratePodcast = ({
   setAudioStorageId,
 }: GeneratePodcastProps) => {
 
-  // for toast notifications
-  const { toast } = useToast()
+  // For toast notifications
+  const { toast } = useToast();
 
   // State to track the generation process
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // Fetch Convex action for PlayHT
+  // Fetch Convex actions and mutations
   const getAudioUrl = useAction(api.playht.generateAudioAction);
-
-  // Upload URL generation logic
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+  const getAudioURL = useMutation(api.podcasts.getURL);   
   const { startUpload } = useUploadFiles(generateUploadUrl);
 
   const generatePodcast = async () => {
@@ -140,23 +139,26 @@ const useGeneratePodcast = ({
       if (!voicePrompt) throw new Error('Prompt is required');
       if (!voiceType) throw new Error('Voice type is required');
 
-      // Get the audio URL
+      // Step 1: Get the audio URL from PlayHT
       const audioUrl = await getAudioUrl({ text: voicePrompt, voice: voiceType, engine: voiceEngine });
 
-      // Download the audio file
+      // Step 2: Download the audio file
       const response = await fetch(audioUrl);
       const blob = await response.blob();
       const file = new File([blob], `podcast-${uuidv4()}.mp3`, {
         type: 'audio/mpeg',
       });
 
-      // Upload the file
+      // Step 3: Upload the audio file to Convex storage
       const uploaded = await startUpload([file]);
       const storageId = (uploaded[0].response as any).storageId;
 
-      // Set states
+      // Step 4: Get the public URL for the uploaded audio file
+      const audioURL = await getAudioURL({ storageId });
+
+      // Step 5: Update states
       setAudioStorageId(storageId);
-      setAudio(audioUrl);
+      setAudio(audioURL!)
       toast({
         title: 'Podcast Generated Successfully!',
       });

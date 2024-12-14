@@ -7,6 +7,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'astute-yak-930.convex.cloud'
+      },
+      {
+        protocol: 'https',
         hostname: 'tenzing.pe'
       },
       {

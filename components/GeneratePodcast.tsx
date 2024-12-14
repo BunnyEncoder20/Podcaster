@@ -114,6 +114,7 @@ const useGeneratePodcast = ({
   setAudio,
   voiceType,
   voicePrompt,
+  voiceEngine,
   setAudioStorageId,
 }: GeneratePodcastProps) => {
 
@@ -140,7 +141,7 @@ const useGeneratePodcast = ({
       if (!voiceType) throw new Error('Voice type is required');
 
       // Get the audio URL
-      const audioUrl = await getAudioUrl({ text: voicePrompt, voice: voiceType });
+      const audioUrl = await getAudioUrl({ text: voicePrompt, voice: voiceType, engine: voiceEngine });
 
       // Download the audio file
       const response = await fetch(audioUrl);

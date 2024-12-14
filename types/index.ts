@@ -56,6 +56,7 @@ export interface GeneratePodcastProps {
   audio: string;
   setAudioStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;
   voicePrompt: string;
+  voiceEngine: string;
   setVoicePrompt: Dispatch<SetStateAction<string>>;
   setAudioDuration: Dispatch<SetStateAction<number>>;
 }
@@ -131,9 +132,6 @@ export type UseDotButtonType = {
 // playht
 // Define the valid voiceEngine options as a union type
 export type VoiceEngineType =
-  | "PlayDialog"
-  | "Play3.0-mini"
-  | "PlayHT2.0-turbo"
   | "PlayHT2.0"
   | "PlayHT1.0"
   | "Standard";

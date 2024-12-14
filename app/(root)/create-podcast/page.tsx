@@ -45,6 +45,7 @@ const CreatePodcastPage = () => {
   // use states 
   const [voices, setVoices] = useState<VoiceCategoryType[]>([]);
   const [audioSample, setAudioSample] = useState('')
+  const [voiceEngine, setVoiceEngine] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   
   const [imagePrompt, setImagePrompt] = useState('')
@@ -133,8 +134,9 @@ const CreatePodcastPage = () => {
                 const selectedVoice = voices.find((voice) => voice.id === value);
 
                 if (selectedVoice) {
-                  setVoiceType(selectedVoice.id);       // Set voice ID
-                  setAudioSample(selectedVoice.sample); // Set audio sample URL
+                  setVoiceType(selectedVoice.id);            // Set voice ID
+                  setAudioSample(selectedVoice.sample);      // Set audio sample URL
+                  setVoiceEngine(selectedVoice.voice_engine) // set voice engine of voice
                 }
               }}>
                 <SelectTrigger className={cn("text-16 w-full border-none bg-black-1 text-gray-1 focus:ring-offset-orange-1")}>
@@ -190,6 +192,7 @@ const CreatePodcastPage = () => {
               setAudioStorageId={setAudioStorageId}
               setAudio={setAudioURL}
               voiceType={voiceType}
+              voiceEngine={voiceEngine}
               audio={audioURL}
               voicePrompt={voicePrompt}
               setVoicePrompt={setVoicePrompt}

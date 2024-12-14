@@ -30,8 +30,8 @@ export const fetchVoicesAction = action({
       method: 'GET',
       headers: {
         accept: 'application/json',
-        AUTHORIZATION: apiKey, // Ensure this matches the API key header format required by PlayHT
-        'X-USER-ID': userId,   // Ensure this matches the user ID header format required by PlayHT
+        AUTHORIZATION: apiKey, 
+        'X-USER-ID': userId,   
       },
     };
 
@@ -48,8 +48,8 @@ export const fetchVoicesAction = action({
       const data = await response.json();
 
       // Return voices array
-      console.log(data)
-      return data.voices || [];
+      // console.log(data)
+      return data || [];
     } catch (error) {
       console.error("Error fetching PlayHT voices:", error);
       throw new Error("Failed to fetch voices. Please try again later.");

@@ -43,7 +43,8 @@ const formSchema = z.object({
 const CreatePodcastPage = () => {
 
   // use states 
-  const [voiceCategories, setVoiceCategories] = useState<VoiceCategoryType[]>([]);
+  const [voices, setVoices] = useState<VoiceCategoryType[]>([]);
+  const [audioSample, setAudioSample] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   
   const [imagePrompt, setImagePrompt] = useState('')
@@ -83,14 +84,14 @@ const CreatePodcastPage = () => {
     const loadVoices = async () => {
       try {
         const voices = await fetchVoices();
-        setVoiceCategories(voices);
+        setVoices(voices);
       } catch (error) {
         console.error('Error loading voices:', error);
       }
     };
 
     loadVoices();
-    console.log(voiceCategories)
+    console.log(voices)
   }, [fetchVoices]);
 
   return (
@@ -127,13 +128,21 @@ const CreatePodcastPage = () => {
               <Label className="text-16 font-bold text-white-1">
                 Select AI Voice
               </Label>
-              <Select onValueChange={(value) => setVoiceType(value)}>
+              <Select onValueChange={(value) => {
+                // Find the selected voice object using its ID
+                const selectedVoice = voices.find((voice) => voice.id === value);
+
+                if (selectedVoice) {
+                  setVoiceType(selectedVoice.id);       // Set voice ID
+                  setAudioSample(selectedVoice.sample); // Set audio sample URL
+                }
+              }}>
                 <SelectTrigger className={cn("text-16 w-full border-none bg-black-1 text-gray-1 focus:ring-offset-orange-1")}>
                   <SelectValue placeholder="AI Voices" className="placeholder:text-gray-1"/>
                 </SelectTrigger>
                 <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus-visible:ring-offset-orange-1">
                   {
-                    voiceCategories.map((voice) => (
+                    voices.map((voice) => (
                       <SelectItem key={voice.id} value={voice.id} className="capitalize focus:bg-orange-1">
                         {voice.name}
                       </SelectItem>
@@ -141,9 +150,9 @@ const CreatePodcastPage = () => {
                   }
                 </SelectContent>
                 {
-                  voiceType && (
+                  audioSample && (
                     <audio 
-                      src={''}
+                      src={audioSample}
                       autoPlay
                       className="hidden"
                     />

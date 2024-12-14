@@ -1,24 +1,22 @@
 import { v } from "convex/values";
 import { action } from "./_generated/server";
-import fetch from "node-fetch"; // Assuming you're using node-fetch or equivalent
 
 export const generateImageAction = action({
   args: {
     prompt: v.string(),
-    steps: v.optional(v.number()), // Optional steps parameter
+    steps: v.optional(v.number()),
   },
-  handler: async (_, { prompt, steps = 4 }) => {
+  handler: async (_, { prompt, steps=4 }) => {
     try {
-      // Define your API endpoint and account ID
-      const ACCOUNT_ID = "your_account_id"; // Replace with your Cloudflare account ID
-      const API_ENDPOINT = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/run/@cf/black-forest-labs/flux-1-schnell`;
+      // Define your API endpoint with account ID
+      const API_ENDPOINT = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_USER_ID}/ai/run/@cf/black-forest-labs/flux-1-schnell`;
 
       // Set up the request options
       const options = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`, // Use an environment variable for security
+          Authorization: `Bearer ${process.env.CLOUDFLARE_WORKERS_AI_API_TOKEN}`,
         },
         body: JSON.stringify({
           prompt,
@@ -36,14 +34,26 @@ export const generateImageAction = action({
       }
 
       const data = await response.json();
-
+      console.log(data)
       // Extract and return the generated image data
       const { result } = data;
       if (!result || !result.image) {
         throw new Error("No image data found in the response");
       }
 
-      return result.image; // This should be the URL or image data
+      // Extract the base64 string and convert to buffer
+      // Decode base64 to binary
+      const base64Image = result.image;
+      const binaryString = atob(base64Image); // Decode base64
+      const buffer = new ArrayBuffer(binaryString.length);
+      const view = new Uint8Array(buffer);
+
+      for (let i = 0; i < binaryString.length; i++) {
+        view[i] = binaryString.charCodeAt(i);
+      }
+
+      return buffer 
+
     } catch (error) {
       console.error("❌ [ERROR] Error generating image:", error);
       throw new Error("Failed to generate image");

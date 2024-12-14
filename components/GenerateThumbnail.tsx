@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 
 // utils imports 
 import { cn } from '@/lib/utils'
+import { v4 as uuidv4 } from 'uuid'
 
 // shadcn imports
 import { Button } from './ui/button'
@@ -16,7 +17,7 @@ import { Input } from './ui/input'
 import Image from 'next/image'
 
 // convex imports
-import { useMutation } from 'convex/react'
+import { useAction, useMutation } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 
 // uploadstuff imports
@@ -44,7 +45,25 @@ const GenerateThumbnail = ({
   const imageRef = useRef<HTMLInputElement>(null);
 
   const generateImage = async () => {
-
+    setIsImageLoading(true)
+    try {
+      const response = await handleGenerateThumbnail({ prompt: imagePrompt });
+      const blob = new Blob([response], { type: "image/png" });
+      handleImage(blob, `thumbnail-${uuidv4()}.png`);
+      toast({
+        title: "Image Generated Successfully!",
+        description: "Your image has been generated successfully",
+      })
+    } catch (error) {
+      console.error(error)
+      toast({
+        title: "Erorr in generating Thumbnail!",
+        description: "There was an error in generating your thumbnail. Please try again later or upload your own image",
+        variant: "destructive",
+      })
+    } finally {
+      setIsImageLoading(false)
+    }
   }
 
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,6 +94,7 @@ const GenerateThumbnail = ({
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const { startUpload } = useUploadFiles(generateUploadUrl);
   const getImageURL = useMutation(api.podcasts.getURL);
+  const handleGenerateThumbnail = useAction(api.cloudflare.generateImageAction)
 
   const handleImage = async (blob: Blob, filename: string) => {
     setIsImageLoading(true);

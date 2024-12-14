@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 
 // zod imports 
@@ -23,8 +23,13 @@ import { Loader } from "lucide-react"
 import GeneratePodcast from "@/components/GeneratePodcast"
 import GenerateThumbnail from "@/components/GenerateThumbnail"
 
-// convex type import
+// convex import
 import { Id } from "@/convex/_generated/dataModel"
+import { api } from "@/convex/_generated/api"
+import { useAction } from "convex/react"
+
+// custom types
+import { VoiceCategoryType } from "@/types"
 
 // form schema
 const formSchema = z.object({
@@ -32,16 +37,13 @@ const formSchema = z.object({
   podcastDescription: z.string().min(2),
 })
 
-// voices from OpenAI
-const voiceCategories = ['alloy', 'shimmer', 'nova', 'echo', 'fable', 'onyx'];
 
 
-
-
-// current page component
+// current page component ⚛️
 const CreatePodcastPage = () => {
 
   // use states 
+  const [voiceCategories, setVoiceCategories] = useState<VoiceCategoryType[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false)
   
   const [imagePrompt, setImagePrompt] = useState('')
@@ -72,6 +74,24 @@ const CreatePodcastPage = () => {
     // ✅ This will be type-safe and validated.
     console.log(values)
   }
+
+
+
+  // PlayHT action
+  const fetchVoices = useAction(api.playht.fetchVoicesAction)
+  useEffect(() => {
+    const loadVoices = async () => {
+      try {
+        const voices = await fetchVoices();
+        setVoiceCategories(voices);
+      } catch (error) {
+        console.error('Error loading voices:', error);
+      }
+    };
+
+    loadVoices();
+    console.log(voiceCategories)
+  }, [fetchVoices]);
 
   return (
     <section className="mt-10 flex flex-col">
@@ -113,9 +133,9 @@ const CreatePodcastPage = () => {
                 </SelectTrigger>
                 <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus-visible:ring-offset-orange-1">
                   {
-                    voiceCategories.map((category) => (
-                      <SelectItem key={category} value={category} className="capitalize focus:bg-orange-1">
-                        {category}
+                    voiceCategories.map((voice) => (
+                      <SelectItem key={voice.id} value={voice.id} className="capitalize focus:bg-orange-1">
+                        {voice.name}
                       </SelectItem>
                     ))
                   }
@@ -123,7 +143,7 @@ const CreatePodcastPage = () => {
                 {
                   voiceType && (
                     <audio 
-                      src={`/${voiceType}.mp3`}
+                      src={''}
                       autoPlay
                       className="hidden"
                     />

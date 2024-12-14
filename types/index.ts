@@ -137,3 +137,20 @@ export type VoiceEngineType =
   | "PlayHT2.0"
   | "PlayHT1.0"
   | "Standard";
+
+export interface VoiceCategoryType {
+  id: string;
+  name: string;
+  sample: string;
+  accent: string;
+  age: string;
+  gender: string;
+  language: string;
+  language_code: string;
+  loudness: string;
+  style: string;
+  tempo: string;
+  texture: string;
+  is_cloned: boolean;
+  voice_engine: string;
+}

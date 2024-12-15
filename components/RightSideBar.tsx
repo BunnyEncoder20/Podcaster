@@ -3,6 +3,7 @@
 import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // clerk imports 
 import { useUser, SignedIn, UserButton } from "@clerk/nextjs";
@@ -15,16 +16,23 @@ import EmblaCarousel from '@/components/Carousel';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 
+// ui imports 
+import LoaderSpinner from './LoaderSpinner';
+
 
 
 // current components ⚛️
 const RightSideBar = () => {
+
+  // navigation
+  const  router = useRouter();
 
   // clerk hooks: auth user 
   const { user } = useUser();
 
   // fetch top podcast
   const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
+  if (!topPodcasters) return <LoaderSpinner />
 
   return (
     <section className="right_sidebar text-white-1">
@@ -57,8 +65,42 @@ const RightSideBar = () => {
           headerTitle = "Fans like you"
         />
         <EmblaCarousel 
-          fansLikeDetail={topPodcasters}
+          fansLikeDetail={topPodcasters!}
         />
+      </section>
+
+      {/* Top Podcaster section */}
+      <section className="flex flex-col gap-8 pt-12">
+        <Header headerTitle='Top Podcasters' />
+        <div className='flex flex-col gap-6'>
+          { 
+            topPodcasters?.slice(0, 5).map((podcaster) => (
+              <div key={podcaster._id} onClick={() => router.push(`/profile/${podcaster.clerkId}`)} className="flex coursor-pointer justify-between">
+                <figure className="flex items-center gap-2">
+
+                  {/* top podcaster profile image */}
+                  <Image src={podcaster.imageURL} alt={podcaster.name} height={44} width={44} className='aspect-square rounded-lg'/>
+
+                  {/* top podcaster name */}
+                  <h2 className="text-14 font-semibold text-white-1">
+                    { podcaster.name }
+                  </h2>
+                </figure>
+
+                {/* top podcaster podcasts count */}
+                <div className='flex items-center'>
+                  <p className="text-12 font-normal">
+                    { podcaster.totalPodcasts > 1 ? (
+                      `${podcaster.totalPodcasts} podcasts`
+                    ) : (
+                      `${podcaster.totalPodcasts} podcast`
+                    )}
+                  </p>
+                </div>
+              </div>
+            ))
+          }
+        </div>
       </section>
     </section>
   )

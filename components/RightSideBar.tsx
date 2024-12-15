@@ -9,14 +9,22 @@ import { useUser, SignedIn, UserButton } from "@clerk/nextjs";
 
 // component imports 
 import Header from '@/components/Header';
-import Carousel from '@/components/Carousel';
+import EmblaCarousel from '@/components/Carousel';
+
+// convex import 
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
 
 
 
 // current components ⚛️
 const RightSideBar = () => {
 
+  // clerk hooks: auth user 
   const { user } = useUser();
+
+  // fetch top podcast
+  const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
 
   return (
     <section className="right_sidebar text-white-1">
@@ -48,7 +56,9 @@ const RightSideBar = () => {
         <Header 
           headerTitle = "Fans like you"
         />
-        <Carousel />
+        <EmblaCarousel 
+          fansLikeDetails={topPodcasters}
+        />
       </section>
     </section>
   )

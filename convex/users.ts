@@ -1,7 +1,8 @@
 import { ConvexError, v } from "convex/values";
-
 import { internalMutation, query } from "./_generated/server";
 
+
+//* Queries 
 export const getUserById = query({
   args: { clerkId: v.string() },
   handler: async (ctx, args) => {
@@ -48,6 +49,10 @@ export const getTopUserByPodcastCount = query({
   },
 });
 
+
+
+
+//* Mutations 
 export const createUser = internalMutation({
   args: {
     clerkId: v.string(),

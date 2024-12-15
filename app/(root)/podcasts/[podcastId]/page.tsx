@@ -10,7 +10,12 @@ import { Id } from '@/convex/_generated/dataModel'
 
 // compoenents imports
 import PodcastDetailsPlayer from '@/components/PodcastDetailsPlayer'
+import LoaderSpinner from '@/components/LoaderSpinner'
+import PodcastCard from '@/components/PodcastCard'
+import EmptyState from '@/components/EmptyState'
 
+
+// current page
 const page = ({ params: { podcastId } }: { params: { podcastId: Id<'podcasts'> } }) => {
 
   // queires from convex
@@ -74,6 +79,29 @@ const page = ({ params: { podcastId } }: { params: { podcastId: Id<'podcasts'> }
         <h1 className="text-20 font-bold text-white-1">
           Other Podcasts by Author
         </h1>
+        { authorsPodcasts && authorsPodcasts.length > 0 ? (
+          <div className="podcast_grid">
+          {
+            authorsPodcasts?.map(({_id, podcastTitle, podcastDescription, imageURL}) => (
+                <PodcastCard 
+                  key={_id} 
+                  podcastId={_id}
+                  title={podcastTitle} 
+                  description={podcastDescription} 
+                  imgURL={imageURL!}
+                />
+              ))
+          }
+        </div>
+        ) : (
+          <>
+            <EmptyState 
+              title="No matching Podcasts found"
+              buttonLink="/discover"
+              buttonText="Discover more Podcasts"
+            />
+          </>
+        )}
       </section>
     </section>
   )

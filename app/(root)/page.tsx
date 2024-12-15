@@ -19,7 +19,7 @@ import { api } from "@/convex/_generated/api";
 // current component
 const page = () => {
 
-  // const tasks = useQuery(api.tasks.get);
+  const trendingPodcasts = useQuery(api.podcasts.getTrendingPodcasts);
 
   return (
     <div className="mt-9 flex flex-col gap-9">
@@ -29,14 +29,15 @@ const page = () => {
           Trending Podcasts
         </h1>
 
-        <div className="flex min-h-screen flex-col items-center justify-between p-24 text-white-1">
-          {/* {tasks?.map(({ _id, text }) => <div key={_id}>{text}</div>)} */}
-        </div> 
-
         <div className="podcast_grid">
           {
-            podcastData.map(({id, title, description, imgURL}) => (
-                <PodcastCard id={id} title={title} description={description} imgURL={imgURL}/>
+            trendingPodcasts?.map(({_id, podcastTitle, podcastDescription, imageURL}) => (
+                <PodcastCard 
+                  key={_id} 
+                  id={_id}
+                  title={podcastTitle} 
+                  description={podcastDescription} 
+                  imgURL={imageURL}/>
               ))
           }
         </div>

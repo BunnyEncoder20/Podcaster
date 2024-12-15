@@ -15,7 +15,7 @@ export interface TopPodcastersProps {
   _id: Id<"users">;
   _creationTime: number;
   email: string;
-  imageUrl: string;
+  imageURL: string;
   clerkId: string;
   name: string;
   podcast: {
@@ -32,12 +32,12 @@ export interface PodcastProps {
   user: Id<"users">;
   podcastTitle: string;
   podcastDescription: string;
-  audioUrl: string | null;
-  imageUrl: string | null;
+  audioURL: string | null;
+  imageURL: string | null;
   imageStorageId: Id<"_storage"> | null;
   author: string;
   authorId: string;
-  authorImageUrl: string;
+  authorImageURL: string;
   voicePrompt: string;
   imagePrompt: string | null;
   voiceType: string;
@@ -70,11 +70,11 @@ export interface GenerateThumbnailProps {
 }
 
 export interface LatestPodcastCardProps {
-  imgUrl: string;
+  imgURL: string;
   title: string;
   duration: string;
   index: number;
-  audioUrl: string;
+  audioURL: string;
   author: string;
   views: number;
   podcastId: Id<"podcasts">;
@@ -95,9 +95,9 @@ export interface PodcastDetailPlayerProps {
 
 export interface AudioProps {
   title: string;
-  audioUrl: string;
+  audioURL: string;
   author: string;
-  imageUrl: string;
+  imageURL: string;
   podcastId: string;
 }
 
@@ -119,7 +119,7 @@ export interface CarouselProps {
 
 export interface ProfileCardProps {
   podcastData: ProfilePodcastProps;
-  imageUrl: string;
+  imageURL: string;
   userFirstName: string;
 }
 

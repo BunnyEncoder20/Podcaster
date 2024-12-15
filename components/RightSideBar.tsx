@@ -57,7 +57,7 @@ const RightSideBar = () => {
           headerTitle = "Fans like you"
         />
         <EmblaCarousel 
-          fansLikeDetails={topPodcasters}
+          fansLikeDetail={topPodcasters}
         />
       </section>
     </section>

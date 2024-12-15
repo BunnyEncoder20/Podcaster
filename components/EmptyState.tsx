@@ -5,7 +5,7 @@ import Link from 'next/link'
 // custom type imports 
 import { EmptyStateProps } from '@/types'
 
-// shadcn imports
+// ui imports
 import { Button } from './ui/button'
 
 

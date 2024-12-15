@@ -37,6 +37,7 @@ const EmblaCarousel = ({ fansLikeDetail }: CarouselProps) => {
   return (
     <section className="flex w-full flex-col gap-4 overflow-hidden" ref={emblaRef}>
       <div className="flex">
+        {/* get the top 5 podcasts */}
         {slides.slice(0, 5).map((item) => (
           <figure
             key={item._id}

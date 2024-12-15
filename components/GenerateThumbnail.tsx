@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { v4 as uuidv4 } from 'uuid'
 
-// shadcn imports
+// ui imports
 import { Button } from './ui/button'
 import { Label } from './ui/label'
 import { Textarea } from './ui/textarea'

@@ -192,7 +192,7 @@ const GeneratePodcast = (props: GeneratePodcastProps) => {
     <div>
       <div className="flex flex-col gap-2.5">
         <Label className="font-16 font-bold text-white-1">
-          Prompt to generate podcast
+          Prompt to generate podcast (max 2000 words. Side effect of using free API 🥲)
         </Label>
         <Textarea 
           placeholder='Provide text to generate audio' 

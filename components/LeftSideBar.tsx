@@ -4,15 +4,25 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
+
+// utils imports
 import { cn } from '@/lib/utils'
+import { SignedOut, SignedIn, useClerk } from '@clerk/nextjs';
 
 // const imports 
 import { sidebarLinks } from '@/constants'
 
+// ui imports
+import { Button } from './ui/button';
+
+
 const LeftSideBar = () => {
 
-  const pathname = usePathname();
   const router = useRouter();
+  const pathname = usePathname();
+
+  // clerk hooks
+  const { signOut } = useClerk();
 
   return (
     <section className="left_sidebar">
@@ -34,8 +44,28 @@ const LeftSideBar = () => {
                   </Link>
           })
         }
-
       </nav>
+
+      {/* sign out button */}
+      <SignedOut>
+        <div className="flex-center w-full pb-14 max-lg:px-4 lg:pr-8">
+          <Button asChild className="text-16 w-full bg-orange-1 font-extrabold">
+            <Link href="/sign-in">
+              Login
+            </Link>
+          </Button>
+        </div>
+      </SignedOut>
+
+      <SignedIn>
+        <div className="flex-center w-full pb-14 max-lg:px-4 lg:pr-8">
+          <Button onClick={() => signOut(() => router.push('/'))} className="text-16 w-full bg-orange-1 font-extrabold">
+            <Link href="/sign-in">
+              Logout
+            </Link>
+          </Button>
+        </div>
+      </SignedIn>
     </section>
   )
 }

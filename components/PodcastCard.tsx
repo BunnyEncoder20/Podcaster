@@ -12,7 +12,7 @@ const PodcastCard = ({podcastId, title, description, imgURL}: PodcastCardProps) 
   const handleViews = () => {
     // Todo: increase views 
 
-    router.push(`/podcast/${podcastId}`,{
+    router.push(`/podcasts/${podcastId}`,{
       scroll: true
     });
   }

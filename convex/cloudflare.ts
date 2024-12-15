@@ -34,7 +34,7 @@ export const generateImageAction = action({
       }
 
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       // Extract and return the generated image data
       const { result } = data;
       if (!result || !result.image) {

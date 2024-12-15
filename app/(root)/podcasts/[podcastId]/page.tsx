@@ -14,6 +14,9 @@ import LoaderSpinner from '@/components/LoaderSpinner'
 import PodcastCard from '@/components/PodcastCard'
 import EmptyState from '@/components/EmptyState'
 
+// clerk imports 
+import { useUser } from '@clerk/nextjs'
+
 
 // current page
 const page = ({ params: { podcastId } }: { params: { podcastId: Id<'podcasts'> } }) => {
@@ -21,13 +24,19 @@ const page = ({ params: { podcastId } }: { params: { podcastId: Id<'podcasts'> }
   // queires from convex
   const podcast = useQuery(api.podcasts.getPodcastById, { podcastId })
   const authorsPodcasts = useQuery(api.podcasts.getOtherPodcastsByAuthor, { podcastId })
+
+  // if the details are loading, show a spinner
   if (!authorsPodcasts || !podcast ) return <LoaderSpinner />
+
+  // if user is creater of podcast, show edit options
+  const { user } = useUser();
+  const isOwner = user?.id === podcast?.authorId;
 
   return (
     <section className="flex w-full flex-col">
       <header className="mt-9 flex items-center justify-between">
         <h1 className="text-20 font-bold text-white-1">
-          Curerntly Playing
+          Currently Playing
         </h1>
         <figure className="flex gap-3">
           <Image 
@@ -43,7 +52,11 @@ const page = ({ params: { podcastId } }: { params: { podcastId: Id<'podcasts'> }
       </header>
 
       {/* Podcast Player Component */}
-      <PodcastDetailsPlayer />
+      <PodcastDetailsPlayer 
+        isOwner={isOwner}
+        podcastId={podcast._id}
+        {...podcast}
+      />
 
       {/* Podcast description */}
       <p className="text-white-2 text-16 pb-8 pt-[45px] font-medium max-md:text-center">

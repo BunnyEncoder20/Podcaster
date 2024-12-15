@@ -20,9 +20,9 @@ const EmptyState = ({
     <section className='flex-center size-full flex-col gap-3'>
       <Image 
         src="/icons/emptyState.svg"
-        width={250}
-        height ={250}
         alt="Empty State Image"
+        height={250}
+        width={250}
       />
       <div className="flex-center w-full max-w-[254px] flex-col gap-3">
         <h1 className="text-16 text-center font-medium text-white-1">

@@ -13,9 +13,10 @@ import PodcastDetailsPlayer from '@/components/PodcastDetailsPlayer'
 
 const page = ({ params: { podcastId } }: { params: { podcastId: Id<'podcasts'> } }) => {
 
-  // get podcast details from convex 
+  // queires from convex
   const podcast = useQuery(api.podcasts.getPodcastById, { podcastId })
-
+  const authorsPodcasts = useQuery(api.podcasts.getOtherPodcastsByAuthor, { podcastId })
+  if (!authorsPodcasts || !podcast ) return <LoaderSpinner />
 
   return (
     <section className="flex w-full flex-col">
@@ -71,7 +72,7 @@ const page = ({ params: { podcastId } }: { params: { podcastId: Id<'podcasts'> }
       {/* Similar Podcast Section */}
       <section className="mt-8 flex flex-col gap-5">
         <h1 className="text-20 font-bold text-white-1">
-          Similar Podcasts
+          Other Podcasts by Author
         </h1>
       </section>
     </section>

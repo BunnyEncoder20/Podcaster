@@ -34,10 +34,11 @@ const page = () => {
             trendingPodcasts?.map(({_id, podcastTitle, podcastDescription, imageURL}) => (
                 <PodcastCard 
                   key={_id} 
-                  id={_id}
+                  podcastId={_id}
                   title={podcastTitle} 
                   description={podcastDescription} 
-                  imgURL={imageURL}/>
+                  imgURL={imageURL}
+                />
               ))
           }
         </div>

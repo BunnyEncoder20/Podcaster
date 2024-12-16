@@ -5,26 +5,32 @@ import Image from 'next/image'
 // ui imports
 import { Input } from '@/components/ui/input'
 
+// utils imports 
+import { useDebounce } from '@/lib/useDebounce'
+
 
 
 // current component ⚛️
 const SearchBar = () => {
+
+  // states
+  const [search, setSearch] = useState('');
+
+  // debounce
+  const debouncedValue = useDebounce(search, 500);
   
   // navigation
   const router = useRouter();
   const pathname = usePathname();
 
-  // states
-  const [search, setSearch] = useState('');
-
   // useEffect to update the url with the search query
   useEffect(() => {
-    if (search) {
-      router.push(`/discover?search=${search}`)
+    if (debouncedValue) {
+      router.push(`/discover?search=${debouncedValue}`)
     } else {
       router.push('/discover')
     }
-  }, [router, pathname, search])
+  }, [router, pathname, debouncedValue])
   
 
   return (

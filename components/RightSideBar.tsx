@@ -99,7 +99,7 @@ const RightSideBar = () => {
 
                 {/* top podcaster podcasts count */}
                 <div className='flex items-center'>
-                  <p className="text-12 font-normal">
+                  <p className="text-12 font-normal text-white-1">
                     { podcaster.totalPodcasts > 1 ? (
                       `${podcaster.totalPodcasts} podcasts`
                     ) : (

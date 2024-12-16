@@ -14,9 +14,13 @@ import ProfileCard from "@/components/ProfileCard";
 
 // current components ⚛️
 const ProfilePage = ({params}: { params: { profileId: string; }; }) => {
+
+  // get userId
   const user = useQuery(api.users.getUserById, {
     clerkId: params.profileId,
   });
+
+  // fetch user podcastsData
   const podcastsData = useQuery(api.podcasts.getPodcastByAuthorId, {
     authorId: params.profileId,
   });
@@ -31,7 +35,7 @@ const ProfilePage = ({params}: { params: { profileId: string; }; }) => {
       <div className="mt-6 flex flex-col gap-6 max-md:items-center md:flex-row">
         <ProfileCard
           podcastData={podcastsData!}
-          imageUrl={user?.imageURL!}
+          imageURL={user?.imageURL!}
           userFirstName={user?.name!}
         />
       </div>

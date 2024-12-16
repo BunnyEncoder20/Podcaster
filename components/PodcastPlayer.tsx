@@ -125,7 +125,7 @@ const PodcastPlayer = () => {
       <Progress
         value={(currentTime / duration) * 100}
         className="w-full"
-        max={duration}
+        max={duration | 1}
       />
 
       {/* Player body */}

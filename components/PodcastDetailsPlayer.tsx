@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 // Convex imports 
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-// import { useAudio } from '@/providers/AudioProvider';
 
 // custom types
 import { PodcastDetailPlayerProps } from "@/types";
@@ -17,6 +16,8 @@ import LoaderSpinner from "./LoaderSpinner";
 import { Button } from "./ui/button";
 import { useToast } from "@/hooks/use-toast";
 
+// context procvider
+import { useAudio } from '@/providers/AudioProvider';
 
 
 // current component ⚛️
@@ -32,6 +33,10 @@ const PodcastDetailPlayer = ({
   authorImageURL,
   authorId,
 }: PodcastDetailPlayerProps) => {
+
+  // audio context
+  const { setAudio } = useAudio();
+
   // for nav
   const router = useRouter();
 
@@ -62,7 +67,13 @@ const PodcastDetailPlayer = ({
   };
 
   const handlePlay = () => {
-    // Placeholder for audio play functionality
+    setAudio({
+      title: podcastTitle,
+      audioURL,
+      imageURL,
+      author,
+      podcastId,
+    });
   };
 
   return (

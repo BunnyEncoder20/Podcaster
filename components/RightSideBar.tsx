@@ -17,8 +17,12 @@ import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 
 // ui imports 
+import { cn } from '@/lib/utils';
 import LoaderSpinner from './LoaderSpinner';
 
+
+// audio context
+import { useAudio } from '@/providers/AudioProvider';
 
 
 // current components ⚛️
@@ -34,10 +38,13 @@ const RightSideBar = () => {
   const topPodcasters = useQuery(api.users.getTopUserByPodcastCount);
   if (!topPodcasters) return <LoaderSpinner />
 
+  // audio context to check of the podcaster player is open
+  const { audio } = useAudio();
+
   return (
-    <section className="right_sidebar text-white-1">
+    <section className={cn('right_sidebar h-[calc(100vh-5px)]', {'h-[calc(100vh-140px)]': audio?.audioURL})}>
       <SignedIn>
-        <Link href={`/profile/!{user?.id}`} className="flex gap-3 pb-12">
+        <Link href={`/profile/${user?.id}`} className="flex gap-3 pb-12">
 
           {/* user profile image/btn */}
           <UserButton />

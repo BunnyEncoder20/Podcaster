@@ -15,17 +15,26 @@ import { sidebarLinks } from '@/constants'
 // ui imports
 import { Button } from './ui/button';
 
+// audio context import
+import { useAudio } from '@/providers/AudioProvider';
 
+
+
+// curent component ⚛️
 const LeftSideBar = () => {
 
+  // for navigation
   const router = useRouter();
   const pathname = usePathname();
 
   // clerk hooks
   const { signOut } = useClerk();
 
+  // audio context: to see if the player is open or not
+  const { audio } = useAudio();
+
   return (
-    <section className="left_sidebar">
+    <section className={cn("left_sidebar h-[calc(100vh-5px)]", {'h-[calc(100vh-140px)]': audio?.audioURL})}>
       <nav className="flex flex-col gap-6">
 
         {/* main logo */}

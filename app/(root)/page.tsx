@@ -37,7 +37,7 @@ const page = () => {
                   podcastId={_id}
                   title={podcastTitle} 
                   description={podcastDescription} 
-                  imgURL={imageURL}
+                  imgURL={imageURL!}
                 />
               ))
           }

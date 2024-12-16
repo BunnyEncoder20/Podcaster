@@ -69,23 +69,26 @@ const RightSideBar = () => {
         />
       </section>
 
-      {/* Top Podcaster section */}
+      {/* Top Podcaster List */}
       <section className="flex flex-col gap-8 pt-12">
         <Header headerTitle='Top Podcasters' />
         <div className='flex flex-col gap-6'>
           { 
             topPodcasters?.slice(0, 5).map((podcaster) => (
               <div key={podcaster._id} onClick={() => router.push(`/profile/${podcaster.clerkId}`)} className="flex coursor-pointer justify-between">
-                <figure className="flex items-center gap-2">
+                <Link href={`/profile/!{user?.id}`}>
+                  <figure className="flex items-center gap-2">
 
-                  {/* top podcaster profile image */}
-                  <Image src={podcaster.imageURL} alt={podcaster.name} height={44} width={44} className='aspect-square rounded-lg'/>
+                    {/* top podcaster profile image */}
+                    <Image src={podcaster.imageURL} alt={podcaster.name} height={44} width={44} className='aspect-square rounded-lg'/>
 
-                  {/* top podcaster name */}
-                  <h2 className="text-14 font-semibold text-white-1">
-                    { podcaster.name }
-                  </h2>
-                </figure>
+                    {/* top podcaster name */}
+                    
+                      <h2 className="text-14 font-semibold text-white-1">
+                        { podcaster.name }
+                      </h2>
+                  </figure>
+                </Link>
 
                 {/* top podcaster podcasts count */}
                 <div className='flex items-center'>

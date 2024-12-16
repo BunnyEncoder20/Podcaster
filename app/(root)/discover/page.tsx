@@ -26,14 +26,20 @@ const Discover = ({ searchParams: { search } }: { searchParams: { search: string
 
       {/* search bar comp */}
       <SearchBar />
-      
+
       <div className="flex flex-col gap-9">
+
+        {/* Discover Trending Podcasts or Search Results heading */}
         <h1 className="text-20 font-bold text-white-1">
           {!search ? 'Discover Trending Podcasts' : 'Search results for '}
           {search && <span className="text-white-2">{search}</span>}
         </h1>
+
+        {/* If podcastData still fetching, show loader spinner */}
         {podcastsData ? (
           <>
+
+            {/* if query returned some data, show podcast cards else emptyState */}
             {podcastsData.length > 0 ? (
               <div className="podcast_grid">
               {podcastsData?.map(({ _id, podcastTitle, podcastDescription, imageURL }) => (

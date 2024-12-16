@@ -25,7 +25,8 @@ and many more, including code architecture and reusability
 1. Next.js
 2. TypeScript
 3. Convex
-4. OpenAI
-5. Clerk
-6. ShadCN
-7. Tailwind CSS
+4. PlayHT (AI voice Gen)
+5. CloudFlare Workers AI
+6. Clerk
+7. ShadCN
+8. Tailwind CSS

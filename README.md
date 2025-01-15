@@ -1,9 +1,12 @@
 # Podcastr
 
 ## Introduction
-- A cutting-edge AI SaaS platform that enables users to create, discover, and enjoy podcasts with advanced features like text-to-audio conversion with multi-voice AI, podcast thumbnail Image generation and seamless playback. 
+
+- A cutting-edge AI SaaS platform that enables users to create, discover, and enjoy podcasts with advanced features like text-to-audio conversion with multi-voice AI, podcast thumbnail Image generation and seamless playback.
+- Credentials for dev: My work email: varun.verma2024@gamil.com
 
 ## Features
+
 ## <a name="features">🔋 Features</a>
 
 1. **Robust Authentication**: Secure and reliable user login and registration system.
@@ -17,8 +20,7 @@
 9. **Podcast Player**: Features backward/forward controls, as well as mute/unmute functionality for a seamless listening experience.
 10. **Responsive Design**: Fully functional and visually appealing across all devices and screen sizes.
 
-and many more, including code architecture and reusability 
-
+and many more, including code architecture and reusability
 
 ## Technologies Used
 

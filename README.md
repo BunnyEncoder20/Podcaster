@@ -32,3 +32,14 @@ and many more, including code architecture and reusability
 6. Clerk
 7. ShadCN
 8. Tailwind CSS
+
+## ScreenShots
+
+![project_ss_0](public/projects_ss/SCR-20250208-qtsn.png)
+![project_ss_1](public/projects_ss/SCR-20250208-qrsd.jpeg)
+![project_ss_2](public/projects_ss/SCR-20250208-qsds.jpeg)
+![project_ss_3](public/projects_ss/SCR-20250208-qsim.png)
+![project_ss_4](public/projects_ss/SCR-20250208-qslp.png)
+![project_ss_5](public/projects_ss/SCR-20250208-qspn.png)
+![project_ss_6](public/projects_ss/SCR-20250208-qssu.png)
+![project_ss_7](public/projects_ss/SCR-20250208-qszi.png)
